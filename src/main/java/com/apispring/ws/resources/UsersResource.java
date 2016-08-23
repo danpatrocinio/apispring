@@ -16,12 +16,13 @@ import com.apispring.model.Users;
 import com.apispring.model.repositories.UsersRepository;
 
 @RestController
+@RequestMapping("/users")
 public class UsersResource {
 
 	@Autowired
 	UsersRepository userRep;
 
-	@RequestMapping(value = "users/atualizar", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "atualizar", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Users> atualizar(@RequestBody Users u) {
 
 		if (u == null) {
@@ -31,7 +32,7 @@ public class UsersResource {
 		return new ResponseEntity<Users>(userAtualizado, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "users/deletar/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "deletar/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Users> deletar(@PathVariable String id) {
 
 		if (id == null || id.length() <= 0) {
@@ -45,13 +46,19 @@ public class UsersResource {
 		return new ResponseEntity<Users>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "users/listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Users> getById(@PathVariable String id) {
+
+		return new ResponseEntity<Users>(userRep.findOne(id), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "listar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Users>> listar() {
 
 		return new ResponseEntity<List<Users>>(userRep.findAll(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "users/salvar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "salvar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Users> salvar(@RequestBody Users u) {
 
 		Users userSaved = null;
