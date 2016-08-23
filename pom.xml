@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>apispring</name>
-	<description>Demo project for Spring Boot</description>
+	<description>API de CRUD com Spring boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
